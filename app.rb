@@ -84,6 +84,20 @@ get "/" do
   erb :index
 end
 
+get "/calculate" do
+  sleep(1.minutes)
+    # Get base API Connection
+  @graph  = Koala::Facebook::API.new(access_token)
+
+  # Get public details of current application
+  @app  =  @graph.get_object(ENV["FACEBOOK_APP_ID"])
+
+  if access_token
+    # @candidates = calculate_rate(acces_token)
+  end
+  erb :calculate
+end
+
 # used by Canvas apps - redirect the POST to be a regular GET
 post "/" do
   redirect "/"
