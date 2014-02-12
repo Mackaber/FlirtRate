@@ -152,7 +152,20 @@
           <div class="inner cover">
             <h1 class="cover-heading">Results</h1>
             <p class="lead">
-            	
+              <div class="row">
+            	<% if @candidates %>
+                <% @candidates.each do |candidate| %>
+                  <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                      <img alt="300x200" style="width: 300px; height: 200px;" src="<%= candidate[:pic_big] %>">
+                      <div class="caption">
+                        <h5><a style="color: #C0392B;text-decoration: none;" href="<%= candidate[:profile_url] %>"><%= candidate[:name] %></a></h5>
+                        <p><%= candidate[:flirtrate] %> %</p>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
             </p>
           </div>
 

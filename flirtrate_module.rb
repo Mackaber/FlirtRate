@@ -10,7 +10,7 @@ def calculate_rate(acces_token)
 	@my_likes = @client.fql_query("SELECT page_id FROM page_fan WHERE uid = me()")
 
 	# Build candidates likes list
-	@candidates_list = @client.fql_query("SELECT uid ,relationship_status,  name FROM user WHERE sex='female' AND relationship_status != 'In a relationship' AND relationship_status != 'Married' AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me())")
+	@candidates_list = @client.fql_query("SELECT uid,profile_url,relationship_status,pic_big,name FROM user WHERE sex='female' AND relationship_status != 'In a relationship' AND relationship_status != 'Married' AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me())")
 	@candidates = @candidates_list.to_a
 
 	# # Deleting users in blacklist.json
@@ -29,6 +29,8 @@ def calculate_rate(acces_token)
 		@candidate = Hash.new
 		@candidate[:uid] = c["uid"]
 		@candidate[:name] = c["name"]
+		@candidate[:profile_url] = c["profile_url"]
+		@candidate[:pic_big] = c["pic_big"]
 		@likes = @client.fql_query("SELECT page_id FROM page_fan WHERE uid = #{@candidate[:uid]} AND profile_section != 'other' AND profile_section != 'apps'")
 		@candidate[:likes] = @likes
 
@@ -47,7 +49,7 @@ def calculate_rate(acces_token)
 	end
 
 	@candidates_sorted = @candidates_likes.sort_by {|c| c[:flirtrate]}.reverse
-	return @candidates_sorted
+	return @candidates_sorted[0..2]
 end
 
 

@@ -1,5 +1,6 @@
 require "sinatra"
 require 'koala'
+require './flirtrate_module.rb'
 
 enable :sessions
 set :raise_errors, false
@@ -85,15 +86,14 @@ get "/" do
 end
 
 get "/calculate" do
-  sleep(1.minutes)
     # Get base API Connection
   @graph  = Koala::Facebook::API.new(access_token)
 
-  # Get public details of current application
+    # Get public details of current application
   @app  =  @graph.get_object(ENV["FACEBOOK_APP_ID"])
 
   if access_token
-    # @candidates = calculate_rate(acces_token)
+    @candidates = calculate_rate(access_token)
   end
   erb :calculate
 end
