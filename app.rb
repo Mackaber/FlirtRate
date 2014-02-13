@@ -13,7 +13,7 @@ set :show_exceptions, false
 # permissions your app needs.
 # See https://developers.facebook.com/docs/reference/api/permissions/
 # for a full list of permissions
-FACEBOOK_SCOPE = 'user_likes,user_photos'
+FACEBOOK_SCOPE = 'basic_info, friends_about_me, friends_actions.books, friends_actions.music, friends_actions.video, friends_activities, friends_birthday, friends_groups, friends_hometown, friends_interests, friends_likes, friends_location, friends_relationship_details, friends_relationships, friends_subscriptions, public_profile, user_about_me, user_actions.music, user_activities, user_birthday, user_friends, user_hometown, user_interests, user_likes, user_location, user_photos, user_relationship_details, user_relationships'
 
 unless ENV["FACEBOOK_APP_ID"] && ENV["FACEBOOK_SECRET"]
   abort("missing env vars: please set FACEBOOK_APP_ID and FACEBOOK_SECRET with your app credentials")
