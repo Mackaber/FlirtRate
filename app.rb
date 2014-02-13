@@ -100,6 +100,18 @@ get "/calculate" do
   erb :calculate
 end
 
+get "/disclamer" do
+  erb :disclamer
+end
+
+get "/faq" do
+  erb :faq
+end
+
+get "/about" do
+  erb :about
+end
+
 # used by Canvas apps - redirect the POST to be a regular GET
 post "/" do
   redirect "/"

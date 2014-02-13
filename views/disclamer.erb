@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
 
-    <title><%= @app['name'] %></title>
+    <title>FlirtRate</title>
     <!-- <link rel="stylesheet" href="stylesheets/screen.css" media="Screen" type="text/css" /> -->
     <!-- <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-width: 480px), only screen and (max-device-width: 480px)" type="text/css" /> -->
 
@@ -21,13 +21,7 @@
     <!-- over facebook.  You should fill these tags in with      -->
     <!-- your data.  To learn more about Open Graph, visit       -->
     <!-- 'https://developers.facebook.com/docs/opengraph/'       -->
-    <meta property="og:title" content="<%= @app['name'] %>" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="<%= url %>" />
-    <meta property="og:image" content="<%= url('/logo.png') %>" />
-    <meta property="og:site_name" content="<%= @app['name'] %>" />
-    <meta property="og:description" content="My First App" />
-    <meta property="fb:app_id" content="<%= @app['name'] %>" />
+
 
     <script type="text/javascript" src="/javascripts/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
@@ -156,52 +150,6 @@
     <![endif]-->
   </head>
   <body>
-    <div id="fb-root"></div>
-    <script type="text/javascript">
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : "<%= @app['id'] %>",                     // App ID
-          channelUrl : "<%= url_no_scheme('/channel.html') %>", // Channel File
-          status     : true,
-          oauth      : true,                                    // check login status
-          cookie     : true,                                    // enable cookies to allow the server to access the session
-          xfbml      : true                                     // parse XFBML
-        });
-
-        // // Listen to the auth.login which will be called when the user logs in
-        // // using the Login button
-        // FB.Event.subscribe('auth.login', function(response) {
-        //   // We want to reload the page now so Ruby can read the cookie that the
-        //   // Javascript SDK sat. But we don't want to use
-        //   // window.location.reload() because if this is in a canvas there was a
-        //   // post made to this page and a reload will trigger a message to the
-        //   // user asking if they want to send data again.
-        //   window.location = window.location;
-        // });
-        var scoper = 'basic_info, friends_about_me, friends_actions.books, friends_actions.music, friends_actions.video, friends_activities, friends_birthday, friends_groups, friends_hometown, friends_interests, friends_likes, friends_location, friends_relationship_details, friends_relationships, friends_subscriptions, user_about_me, user_actions.music, user_activities, user_birthday, user_friends, user_hometown, user_interests, user_likes, user_location, user_photos, user_relationship_details, user_relationships'
-        FB.login(function(response) {
-         if (response.authResponse) {
-           console.log('Welcome!  Fetching your information.... ');
-           FB.api('/me', function(response) {
-             console.log('Good to see you, ' + response.name + '.');
-           });
-         } else {
-           console.log('User cancelled login or did not fully authorize.');
-         }
-       }, {scope: scoper});
-
-      };
-
-      // Load the SDK Asynchronously
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-
     <div class="site-wrapper">
 
       <div class="site-wrapper-inner">
@@ -212,49 +160,33 @@
             <div class="inner">
               <h3 class="masthead-brand"><a href="/">FlirtRate</a></h3>
               <ul class="nav masthead-nav">
-                <li><a href="/disclamer">Disclamer</a></li>
+                <li class="active"><a href="/disclamer">Disclamer</a></li>
                 <li><a href="/faq">FAQ</a></li>
                 <li><a href="/about">About</a></li>
               </ul>
             </div>
           </div>
-       <% if true %>
           <div class="inner cover">
-            <h1 id="title" class="cover-heading">FlirtRate</h1>
-            <p id="description" class="lead">Discover Who of your friends you may have more posibilities with.</p>
-            <p id="results" class="lead" style="height:200px">
-              <a href="#">
-                <img id="heart" src="/images/logo.svg" style="width:200px">
-              </a>
+            <h1 id="title" class="cover-heading">Disclamer</h1>
+            <br>
+            <p style="text-align:justify;" id="description" class="lead">
+              THIS IS ONLY AN EXPERIMENT<br>
+              DON'T TAKE THE RESULTS TO SERIOUSLY<br>
+              I'M NOT RESPONSIBLE FOR ANY CONFUSION<br>
+              OR FIGHT THIS MAY CAUSE<br>
+              THIS APP SHOULD BE USED ONLY FOR ENTERTEIMENT ONLY.<br>
+              <br>
+              <br>
+              HAVE FUN
             </p>
           </div>
-
-
-          <script>
-            $('#heart').on('click', function(){
-              $("#heart").addClass('animate');
-              $("#title").html("Loading...")
-              $("#description").html("It may take up to 2 minutes, please be patient...")
-              begin();
-            });
-          </script>
-      <% else %>
-            <div class="inner cover">
-            <h1 id="title" class="cover-heading">Welcome</h1>
-              <p id="description" class="lead">
-                <div class="fb-login-button" data-scope="<%= FACEBOOK_SCOPE %>">Log In</div>
-              </p>
-      <% end %>
           <div class="mastfoot">
             <div class="inner">          
               <p>
                 <div id="sharecontrols">
-                  <a id="postToWall" href="#">
-                    Post Result to wall
-                  </a>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <a id="shareApp" href="#">
                     Share App
+                  <a/>
                 </div>
                 FlirtRate by <a href="https://twitter.com/mackaber">@Mackaber</a>.
               </p>
