@@ -30,7 +30,9 @@ function begin(){
 					candidate["coincidences"] = 0
 					candidates_likes.push(candidate);	
 					i++
-					console.log(Math.round((i/candidates_list.length)*100) + "%")
+					prc = Math.round((i/candidates_list.length)*100) + "%"
+					console.log(prc)
+					$("#title").html("Loading... " + prc)
 					if(i == candidates_list.length){
 						done();
 					}
@@ -68,5 +70,37 @@ function done() {
 	});
 	console.log("done!")
 	sorted_list = candidates_likes.sort(sort_by('flirtrate', false, null));
+	show_results();
 }
+
+function build_results(){
+	line = ""
+	i = 1
+
+	line = '<div class="row">'
+	sorted_list.slice(0,3).forEach(function(candidate){
+		line += '<div class="col-sm-6 col-md-4">'
+		line += '	<div class="thumbnail">'
+		line += '      <img alt="300x200" style="width: 300px;height: 200px;" class="result_img" src="'+ candidate.pic_big +'">'
+		line += '		 <div class="caption">'
+		line += '			<p>'+ i + '.</p>'
+		line += '		 <h5><a style="color: #C0392B;text-decoration: none;" href="' + candidate.profile_url + '">' + candidate.name + '</a></h5>'
+		line += '			<p>Flirtrate: ' + Math.round((candidate.flirtrate)*100) + '%</p>'
+		line += '		 </div>'
+		line += '	</div>'
+		line += '</div>'
+		i++;
+	});
+    return line;
+}
+
+
+function show_results(){
+	$("#description").hide();
+	$("#sharecontrols").show();
+	$("#results").attr("style","");
+	$("#title").html("Results");
+	$("#results").html(build_results());
+}
+
 

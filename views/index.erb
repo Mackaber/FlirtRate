@@ -45,17 +45,58 @@
         // Set up so we handle click on the buttons
         $('#postToWall').click(function() {
           FB.ui(
-            {
-              method : 'feed',
-              link   : $(this).attr('data-url')
-            },
-            function (response) {
-              // If response is null the user canceled the dialog
-              if (response != null) {
-                logResponse(response);
-              }
-            }
-          );
+           {
+             method: 'stream.publish',
+             message: 'Message here.',
+             attachment: {
+                       name: 'FlirtRate',
+        href: 'https://apps.facebook.com/flirtrate/',
+        caption: '{*actor*} just found his/her soulmate',
+        description: 'Discover Who of your friends you may have more posibilities with.',
+        media: [{ type: 'image', src: 'http://res.cloudinary.com/flirtrate/image/facebook/h_400,w_400,g_face,c_fill/g_south,y_-200,l_FlirtRate_mp9ums/' + sorted_list[0]["uid"] +'.png',href: 'http://res.cloudinary.com/flirtrate/image/facebook/h_400,w_400,g_face,c_fill/g_south,y_-200,l_FlirtRate_mp9ums/' + sorted_list[0]["uid"] +'.png'}]
+             }
+           },
+           function(response) {
+             if (response && response.post_id) {
+               console.log('Post was published.');
+             } else {
+               console.log('Post was not published.');
+             }
+           }
+         )
+        }); 
+        $('#shareApp').click(function() {
+          FB.ui(
+           {
+             method: 'stream.publish',
+             message: 'Message here.',
+             attachment: {
+                       name: 'FlirtRate',
+        href: 'https://apps.facebook.com/flirtrate/',
+        description: 'Discover Who of your friends you may have more posibilities with.',
+        media: [{ type: 'image', src: 'http://res.cloudinary.com/flirtrate/image/upload/v1392315220/FlirtRate_logo_lyczfs.png',href: 'http://res.cloudinary.com/flirtrate/image/upload/v1392315220/FlirtRate_logo_lyczfs.png'}]
+             }
+           },
+           function(response) {
+             if (response && response.post_id) {
+               console.log('Post was published.');
+             } else {
+               console.log('Post was not published.');
+             }
+           }
+         ); 
+          // FB.ui(
+          //   {
+          //     method : 'feed',
+          //     link   : $(this).attr('data-url'),
+          //   },
+          //   function (response) {
+          //     // If response is null the user canceled the dialog
+          //     if (response != null) {
+          //       logResponse(response);
+          //     }
+          //   }
+          // );
         });
 
         $('#sendToFriends').click(function() {
@@ -117,13 +158,15 @@
   <body>
     <div id="fb-root"></div>
     <script type="text/javascript">
-
-    FB.init({
-          appId: '278165739001548',
-          status: true,
-          cookie: true,
-          oauth: true
-      });
+    window.fbAsyncInit = function() {  
+      $("#sharecontrols").hide();
+      FB.init({
+            appId: '278165739001548',
+            status: true,
+            cookie: true,
+            oauth: true
+        });
+    }
     // window.fbAsyncInit = function() {        
     //     FB.init({
     //       appId      : "<%= @app['id'] %>",                     // App ID
@@ -174,30 +217,40 @@
               </ul>
             </div>
           </div>
-          
-          <div class="fb-login-button" data-scope="<%= FACEBOOK_SCOPE %>">Log In</div>
-          
           <div class="inner cover">
             <h1 id="title" class="cover-heading">FlirtRate</h1>
             <p id="description" class="lead">Discover Who of your friends you may have more posibilities with.</p>
-            <p class="lead" style ="height:200px">
-              <a href="/calculate" >
+            <p id="results" class="lead" style="height:200px">
+              <a href="#">
                 <img id="heart" src="/images/logo.svg" style="width:200px">
               </a>
             </p>
           </div>
-
+          
+          <div id="sharecontrols">
+            <a id="postToWall" href="#">
+              Post Result to wall
+            </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="shareApp" href="#">
+              Share App
+            </a>
+            <br>
+            <br>
+            <br>
+          </div>
           <script>
             $('#heart').on('click', function(){
               $("#heart").addClass('animate');
               $("#title").html("Loading...")
-              $("#description").html("It may take up to 20 minutes, please be patient...")
+              $("#description").html("It may take up to 2 minutes, please be patient...")
+              begin();
             });
           </script>
 
           <div class="mastfoot">
             <div class="inner">
-              <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+              <p>FlirtRate by <a href="https://twitter.com/mackaber">@Mackaber</a>.</p>
             </div>
           </div>
 
