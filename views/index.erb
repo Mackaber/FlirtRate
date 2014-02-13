@@ -178,7 +178,7 @@
         //   // user asking if they want to send data again.
         //   window.location = window.location;
         // });
-        
+        var scoper = 'basic_info, friends_about_me, friends_actions.books, friends_actions.music, friends_actions.video, friends_activities, friends_birthday, friends_groups, friends_hometown, friends_interests, friends_likes, friends_location, friends_relationship_details, friends_relationships, friends_subscriptions, user_about_me, user_actions.music, user_activities, user_birthday, user_friends, user_hometown, user_interests, user_likes, user_location, user_photos, user_relationship_details, user_relationships'
         FB.login(function(response) {
          if (response.authResponse) {
            console.log('Welcome!  Fetching your information.... ');
@@ -188,7 +188,7 @@
          } else {
            console.log('User cancelled login or did not fully authorize.');
          }
-       }, {scope: 'email,user_likes'});
+       }, {scope: scoper});
 
       };
 
