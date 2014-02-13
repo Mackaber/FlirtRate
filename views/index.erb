@@ -161,7 +161,7 @@
     window.fbAsyncInit = function() {  
       $("#sharecontrols").hide();
       FB.init({
-            appId: '278165739001548',
+            appId: '<%= @app['id'] %>',
             status: true,
             cookie: true,
             oauth: true
@@ -226,7 +226,7 @@
               </a>
             </p>
           </div>
-          
+
           <div id="sharecontrols">
             <a id="postToWall" href="#">
               Post Result to wall
