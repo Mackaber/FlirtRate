@@ -4,34 +4,35 @@ var sorted_list
 var meeting_sex = null
 var user = "me()"
 
-function begin(){
+function begin() {
 	// Adds sex validation
 	FB.api({
 		method: 'fql.query',
 		query: 'SELECT meeting_sex FROM user WHERE uid=' + user
 	}, function(response) {
-		if(response.length > 0) {
-			meeting_sex = response[0].meeting_sex[0]
+		if(response[0].length > 0) {
+			meeting_sex = response[0].meeting_sex[0];
+			do_search();
+		}else{
+			var sex
+			FB.api({
+				method: 'fql.query',
+				query: 'SELECT sex FROM user WHERE uid=' + user
+			}, function(response) {
+				sex = response[0].sex
+				if(sex == 'male'){
+					meeting_sex = 'female'
+					do_search();
+				}else{
+					meeting_sex = 'male'
+					do_search();
+				}
+			});
 		}
 	});
+}
 
-	// Or creates it if its missing...
-	if(meeting_sex == null){
-		var sex
-		FB.api({
-			method: 'fql.query',
-			query: 'SELECT sex FROM user WHERE uid=' + user
-		}, function(response) {
-			sex = response.sex
-		});
-		if(sex == 'male'){
-			meeting_sex = 'female'
-		}else{
-			meeting_sex = 'male'
-		}
-
-	}
-
+function do_search() {
 	FB.api({
 		method: 'fql.query',
 		query: 'SELECT page_id FROM page_fan WHERE uid =' + user
