@@ -2,14 +2,17 @@ var candidates_likes
 var i = 0
 var sorted_list
 var meeting_sex = null
+var user = "me()"
 
 function begin(){
 	// Adds sex validation
 	FB.api({
 		method: 'fql.query',
-		query: 'SELECT meeting_sex FROM user WHERE uid=me()'
+		query: 'SELECT meeting_sex FROM user WHERE uid=' + user
 	}, function(response) {
-		meeting_sex = response[0].meeting_sex[0]
+		if(response.length > 0) {
+			meeting_sex = response[0].meeting_sex[0]
+		}
 	});
 
 	// Or creates it if its missing...
@@ -17,9 +20,9 @@ function begin(){
 		var sex
 		FB.api({
 			method: 'fql.query',
-			query: 'SELECT sex FROM user WHERE uid=me()'
+			query: 'SELECT sex FROM user WHERE uid=' + user
 		}, function(response) {
-			sex = response[0].sex
+			sex = response.sex
 		});
 		if(sex == 'male'){
 			meeting_sex = 'female'
@@ -31,12 +34,12 @@ function begin(){
 
 	FB.api({
 		method: 'fql.query',
-		query: 'SELECT page_id FROM page_fan WHERE uid = me()'
+		query: 'SELECT page_id FROM page_fan WHERE uid =' + user
 	}, function(response) {
 		my_likes = response
 		FB.api({
 			method: 'fql.query',
-			query: "SELECT uid,profile_url,relationship_status,pic_big,name" + " FROM user WHERE sex='" + meeting_sex + "'" + " AND relationship_status != 'In a relationship'" + " AND relationship_status != 'Married'" + " AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me())"
+			query: "SELECT uid,profile_url,relationship_status,pic_big,name" + " FROM user WHERE sex='" + meeting_sex + "'" + " AND relationship_status != 'In a relationship'" + " AND relationship_status != 'Married'" + " AND uid IN (SELECT uid2 FROM friend WHERE uid1 = " + user + ")"
 		}, function(response) {
 			candidates_list = response
 			candidates_likes = []
