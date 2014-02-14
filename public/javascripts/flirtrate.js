@@ -1,7 +1,7 @@
 var candidates_likes
 var i = 0
 var sorted_list
-var meeting_sex
+var meeting_sex = null
 
 function begin(){
 	// Adds sex validation
